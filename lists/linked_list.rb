@@ -13,7 +13,7 @@ class LinkedList
     @head = nil
   end
 
-  def print_list
+  def inspect
     current = @head
     while current != nil
       print "#{current.data} -> "
@@ -95,9 +95,184 @@ class LinkedList
     true
   end
 
+  def insert_sorted(data)
+    new_node = Node.new(data)
+    unless @head
+      @head = new_node
+      return true
+    end
+
+    tmp = @head
+    if data <= tmp.data
+      new_node.next = tmp
+      @head = new_node
+    else
+      #Traverse the list
+      prev = nil
+      while tmp != nil && tmp.data <= data
+        prev = tmp
+        tmp = tmp.next
+      end
+      prev.next = new_node
+      new_node.next = tmp
+    end
+    true
+  end
+
+  def delete_node(start_node, node_to_delete)
+    return nil if start_node == @head
+    tmp = start_node
+    while tmp != nil && tmp.next != node_to_delete
+      tmp = tmp.next
+    end
+    return nil unless tmp
+    tmp.next = tmp.next.next
+    true
+  end
+
   def search_recursive(current, data)
     return nil unless current
     return true if current.data == data
     search_recursive(current.next, data)
+  end
+
+  def self.compare_strings(llist_1, llist_2)
+    string_1 = ""
+    string_2 = ""
+    # Convertir a string la primera
+    tmp = llist_1.head
+    while tmp != nil
+      string_1 += tmp.data
+      tmp = tmp.next
+    end
+    # Covertir a string la segunda
+    tmp = llist_2.head
+    while tmp != nil
+      string_2 += tmp.data
+      tmp = tmp.next
+    end
+
+    case string_1 <=> string_2
+    when 0
+      0
+    when 1
+      1
+    when -1
+      -1
+    end
+  end
+
+  def self.compare_strings_2(llist_1, llist_2)
+    tmp_1 = llist_1.head
+    tmp_2 = llist_2.head
+
+    while tmp_1 != nil && tmp_2 != nil && tmp_1.data == tmp_2.data
+      tmp_1 = tmp_1.next
+      tmp_2 = tmp_2.next
+    end
+
+    # Si son del mismo tamanio pero de diferente caracter
+    if tmp_1 != nil && tmp_2 != nil
+      return (tmp_1.data > tmp_2.data ? 1 : -1)
+    end
+    if tmp_1 != nil && tmp_2 == nil
+      return 1
+    end
+    if tmp_1 == nil && tmp_2 != nil
+      return -1
+    end
+    0
+  end
+
+  def self.add_two_numbers(llist_1, llist_2)
+    #Convert lists to numbers
+    num_1 = 0
+    tmp_1 = llist_1.head
+    while tmp_1 != nil
+      num_1 = (num_1 * 10) + tmp_1.data
+      tmp_1 = tmp_1.next
+    end
+
+    num_2 = 0
+    tmp_2 = llist_2.head
+    while tmp_2 != nil
+      num_2 = (num_2 * 10) + tmp_2.data
+      tmp_2 = tmp_2.next
+    end
+    result = num_1 + num_2
+    r_list = LinkedList.new
+    result.to_s.split('').map(&:to_i).each do |digit|
+      r_list.insert_at_end(digit)
+    end
+    r_list
+  end
+
+  def size
+    n = 0
+    tmp = @head
+    while tmp != nil
+      n += 1
+      tmp = tmp.next
+    end
+    n
+  end
+
+  def slice(index, number_of_nodes)
+    start = 0
+    tmp = @head
+    new_list = LinkedList.new
+    while tmp != nil && start < (index + number_of_nodes)
+      if start >= index
+        new_list.insert_at_end(tmp.data)
+      end
+      start += 1
+      tmp = tmp.next
+    end
+    new_list
+  end
+
+  def self.merge_sort(list)
+    size = list.size
+    return list if size <= 1
+    mid = size / 2
+
+    # Divide!!!
+    left_part = merge_sort(list.slice(0, mid))
+    right_part = merge_sort(list.slice(mid, size - mid))
+
+    # Conquerr!!
+    merge(left_part, right_part)
+  end
+
+  def self.merge(left_part, right_part)
+    sorted_list = LinkedList.new
+    tmp1 = left_part.head
+    tmp2 = right_part.head
+
+    while tmp1 != nil && tmp2 != nil
+      if tmp1.data < tmp2.data
+        sorted_list.insert_at_end(tmp1.data)
+        tmp1 = tmp1.next
+      else
+        sorted_list.insert_at_end(tmp2.data)
+        tmp2 = tmp2.next
+      end
+    end
+
+    while tmp1 != nil
+      sorted_list.insert_at_end(tmp1.data)
+      tmp1 = tmp1.next
+    end
+    while tmp2 != nil
+      sorted_list.insert_at_end(tmp2.data)
+      tmp2 = tmp2.next
+    end
+    sorted_list
+  end
+
+  def print_random()
+    return nil unless @head
+    result = slice(rand(size+1), 1)
+    result.head.data
   end
 end
