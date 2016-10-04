@@ -184,7 +184,7 @@ class LinkedList
     0
   end
 
-  def self.add_two_numbers(llist_1, llist_2)
+  def self.add_two_numbers_forward(llist_1, llist_2)
     #Convert lists to numbers
     num_1 = 0
     tmp_1 = llist_1.head
@@ -205,6 +205,30 @@ class LinkedList
       r_list.insert_at_end(digit)
     end
     r_list
+  end
+
+  def self.add_two_numbers_backward(llist1, llist2)
+    num1 = 0
+    position = 1
+    tmp1 = llist1.head
+    while tmp1 != nil
+      num1 += tmp1.data * position
+      position *= 10
+      tmp1 = tmp1.next
+    end
+
+    num2 = 0
+    position = 1
+    tmp2 = llist2.head
+    while tmp2 != nil
+      num2 += tmp2.data * position
+      position *= 10
+      tmp2 = tmp2.next
+    end
+    result = num1 + num2
+    new_list = LinkedList.new
+    result.to_s.each_char { |digit| new_list.insert_front(digit.to_i) }
+    new_list
   end
 
   def size
@@ -304,5 +328,30 @@ class LinkedList
       current = current.next
       index += 1
     end
+  end
+
+  def palindrome?
+    stack = []
+    current = @head
+    while current != nil
+      stack << current.data
+      current = current.next
+    end
+
+    current = @head
+    while current != nil
+      if current.data != stack.pop
+        return false
+      end
+      current = current.next
+    end
+    true
+  end
+
+  def delete_node_without_head(node)
+    return nil unless node
+    node.data = node.next.data
+    node.next = node.next.next
+    true
   end
 end
