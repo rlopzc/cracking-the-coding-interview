@@ -275,4 +275,34 @@ class LinkedList
     result = slice(rand(size+1), 1)
     result.head.data
   end
+
+  def remove_duplicates
+    memo = {}
+    current = @head
+    prev = nil
+    while current != nil
+      if memo.has_key?(current.data)
+        prev.next = current.next
+      end
+      memo[current.data] = true
+      prev = current
+      current = current.next
+    end
+    @head
+  end
+
+  def return_kth_to_last(start)
+    index = 0
+    current = @head
+
+    while current != nil
+      if index == start
+        llist = LinkedList.new
+        llist.head = current
+        return llist
+      end
+      current = current.next
+      index += 1
+    end
+  end
 end
