@@ -54,6 +54,7 @@ class LinkedList
     return unless current
     print_inverted(current.next)
     print "#{current.data} -> "
+    puts 'END'
   end
 
   def delete_node(data)
@@ -78,7 +79,7 @@ class LinkedList
     current = @head
     if position == 0
       @head = current.next
-      return true
+      return current.data
     end
 
     (position-1).times do
