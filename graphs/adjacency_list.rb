@@ -14,8 +14,7 @@ class AdjacencyList
 
   def inspect
     vertices.each do |key, value|
-      puts "<-- #{key} -->"
-      puts "Neighboors: #{value.join(', ')}"
+      puts "#{key}: #{value.join(', ')}"
     end
     true
   end

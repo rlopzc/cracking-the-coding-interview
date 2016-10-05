@@ -21,11 +21,39 @@ module BinarySearchTree
       "{#{value}::#{left_node.inspect}|#{right_node.inspect}}"
     end
 
+    def empty_node
+      false
+    end
+
     def include?(data)
       case value <=> data
       when 1 then left_node.include?(data)
       when -1 then right_node.include?(data)
       when 0 then true
+      end
+    end
+
+    def self.in_order_traversal(node)
+      if node != nil
+        in_order_traversal(node.left_node)
+        puts node.value if !node.empty_node
+        in_order_traversal(node.right_node)
+      end
+    end
+
+    def self.pre_order_traversal(node)
+      if node != nil
+        puts node.value if !node.empty_node
+        in_order_traversal(node.left_node)
+        in_order_traversal(node.right_node)
+      end
+    end
+
+    def self.post_order_traversal(node)
+      if node != nil
+        in_order_traversal(node.left_node)
+        in_order_traversal(node.right_node)
+        puts node.value if !node.empty_node
       end
     end
 
@@ -48,6 +76,15 @@ module BinarySearchTree
     end
     def inspect
       "{}"
+    end
+    def left_node
+      nil
+    end
+    def right_node
+      nil
+    end
+    def empty_node
+      true
     end
   end
 end
