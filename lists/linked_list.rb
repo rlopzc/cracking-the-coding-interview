@@ -295,7 +295,7 @@ class LinkedList
     sorted_list
   end
 
-  def print_random()
+  def print_random
     return nil unless @head
     result = slice(rand(size+1), 1)
     result.head.data

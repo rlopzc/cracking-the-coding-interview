@@ -64,11 +64,16 @@ class OtherProblems
   end
 
   def self.permutation?(str1, str2)
+    return false if str1.size != str2.size
     str1.chars.sort.join == str2.chars.sort.join
   end
 
-  def self.URLify(sentence)
-    sentence.split(' ').join('%20')
+  def self.URLify(sentence, true_length)
+    # sentence.split(' ').join('%20')
+    sentence.gsub!(' ', '%20')
+
+    return false if sentence.length != length
+    sentence
   end
 
   def self.one_away(str1, str2)
@@ -111,7 +116,7 @@ class OtherProblems
 
     r.times do |row|
       c.times do |col|
-        
+
       end
     end
   end
