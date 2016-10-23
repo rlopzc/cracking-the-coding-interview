@@ -50,6 +50,7 @@ module BinarySearchTree
     def self.in_order_traversal_iterative(node)
       # s = Array.new--
       # TODO implementar iterativo
+
     end
 
     def self.pre_order_traversal(node)

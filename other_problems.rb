@@ -116,7 +116,7 @@ class OtherProblems
 
     r.times do |row|
       c.times do |col|
-
+        # TODO a implementar
       end
     end
   end
