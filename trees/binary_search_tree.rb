@@ -35,10 +35,21 @@ module BinarySearchTree
 
     def self.in_order_traversal(node)
       if node != nil
-        in_order_traversal(node.left_node)
-        puts node.value if !node.empty_node
-        in_order_traversal(node.right_node)
+        left_node = in_order_traversal(node.left_node)
+        if left_node != nil && left_node.value != nil
+          return false if left_node.value >= node.value
+        end
+        right_node = in_order_traversal(node.right_node)
+        if right_node != nil && right_node.value != nil
+          return false if right_node.value <= node.value
+        end
+        node
       end
+    end
+
+    def self.in_order_traversal_iterative(node)
+      # s = Array.new--
+      # TODO implementar iterativo
     end
 
     def self.pre_order_traversal(node)
@@ -85,6 +96,9 @@ module BinarySearchTree
     end
     def empty_node
       true
+    end
+    def value
+      nil
     end
   end
 end
