@@ -64,4 +64,16 @@ class DoubleLinkedList
       current = current.next
     end
   end
+
+  def reverse
+    current = @head
+    tmp = nil
+    while current != nil
+      tmp = current.prev
+      current.prev = current.next
+      current.next = tmp
+      current = current.prev
+    end
+    @head = tmp.prev
+  end
 end

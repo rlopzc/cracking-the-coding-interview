@@ -301,7 +301,7 @@ class LinkedList
     result.head.data
   end
 
-  def remove_duplicates
+  def delete_duplicates
     memo = {}
     current = @head
     prev = nil

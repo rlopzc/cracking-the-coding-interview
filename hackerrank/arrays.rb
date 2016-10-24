@@ -16,5 +16,6 @@ class Arrays
     steps.times do
       array.push(array.shift)
     end
+    puts array.join(' ')
   end
 end
