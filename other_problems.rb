@@ -120,4 +120,14 @@ class OtherProblems
       end
     end
   end
+
+  def self.reverse_array(array)
+    (array.size / 2).times do |i|
+      last = array.size - i - 1
+      tmp = array[i]
+      array[i] = array[last]
+      array[last] = tmp
+    end
+    true
+  end
 end
