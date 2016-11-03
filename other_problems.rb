@@ -130,4 +130,41 @@ class OtherProblems
     end
     true
   end
+
+  def self.non_repeated(str)
+    memo = Hash.new
+
+    str.each_char.with_index do |ch, index|
+        if memo.has_key?(ch)
+            number, index = memo[ch]
+            number += 1
+            memo[ch] = [number, index]
+        else
+            memo[ch] = [1, index]
+        end
+    end
+
+    lowest = nil
+    memo.each do |key, value|
+        number, _index = value
+        if number == 1
+            lowest = value
+            break
+        end
+    end
+    _number, letter = lowest
+    return str[letter]
+  end
+
+  def self.find_indexes(ary, target)
+    differences = Hash.new
+    ary.each_with_index do |number, index|
+        if differences.has_key?(number)
+            return [differences[number], index]
+        end
+        diff = target - number
+        differences[diff] = index
+    end
+    nil
+  end
 end
