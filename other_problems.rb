@@ -167,4 +167,14 @@ class OtherProblems
     end
     nil
   end
+
+  def self.find_max_difference(ary)
+    min = max = ary.first
+    ary.each do |i|
+      min = min < i ? min : i
+      max = max > i ? max : i
+    end
+  (max-min).abs
+  end
+
 end

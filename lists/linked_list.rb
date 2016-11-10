@@ -331,7 +331,7 @@ class LinkedList
     end
   end
 
-  def palindrome?
+  def palindrome_stack?
     stack = []
     current = @head
     while current != nil
@@ -347,6 +347,39 @@ class LinkedList
       current = current.next
     end
     true
+  end
+
+  def palindrome_inplace?
+    slow = fast = @head
+    while fast != nil && fast.next != nil
+      slow = slow.next
+      fast = fast.next.next
+    end
+    middle = slow
+    second_half = reverse_llist(slow.next)
+    head_2 = second_half
+    head_1 = @head
+    while head_1 != nil && head_2 != nil
+      if head_1.data != head_2.data
+        return false
+      end
+      head_1 = head_1.next
+      head_2 = head_2.next
+    end
+    middle.next = reverse_llist(second_half)
+    true
+  end
+
+  def reverse_llist(node)
+    current = node
+    prev_node = next_node = nil
+    while current != nil
+      next_node = current.next
+      current.next = prev_node
+      prev_node = current
+      current = next_node
+    end
+    node = prev_node
   end
 
   def delete_node_without_head(node)
