@@ -22,6 +22,13 @@ class LinkedList
     puts "END"
   end
 
+  def print_recursive(node)
+    return if node == nil
+    puts node.data
+    print_recursive(node.next)
+    return node
+  end
+
   def insert_at_end(data)
     current = @head
     new_node = Node.new(data)
