@@ -115,6 +115,60 @@ class Node
     print "#{head.data} -> "
   end
 
+  def self.compare_two_llists(head_1, head_2)
+    return false if head_1 == nil || head_2 == nil
+    tmp_1, tmp_2 = head_1, head_2
+    while tmp_1 != nil && tmp_2 != nil
+      return false if tmp_1.data != tmp_2.data
+      tmp_1, tmp_2 = tmp_1.next, tmp_2.next
+    end
+    if tmp_1 != nil || tmp_2 != nil
+      return false
+    else
+      true
+    end
+  end
+
+  def self.compare_two_llists_recursive(head_1, head_2)
+    if head_1 != nil && head_2 != nil
+      return (head_1.data == head_2.data) && compare_two_llists_recursive(head_1.next, head_2.next)
+    elsif head_1 == nil && head_2 == nil
+      return true
+    elsif head_1 != nil || head_2 != nil
+      return false
+    end
+  end
+
+  def self.merge_llists(head_a, head_b)
+    return head_a if head_b == nil
+    return head_b if head_a == nil
+
+    new_list = nil
+    while head_a != nil && head_b != nil
+      if head_a.data <= head_b.data
+        new_list = Node.append_to_tail(new_list, head_a.data)
+        head_a = head_a.next
+      else
+        new_list = Node.append_to_tail(new_list, head_b.data)
+        head_b = head_b.next
+      end
+    end
+
+    while head_a != nil
+      new_list = Node.append_to_tail(new_list, head_a.data)
+      head_a = head_a.next
+    end
+    while head_b != nil
+      new_list = Node.append_to_tail(new_list, head_b.data)
+      head_b = head_b.next
+    end
+    new_list
+  end
+
+  def self.merge_llists_recursive(head_a, head_b)
+    # TODO to implement
+  end
+
   def inspect
     tmp = self
     while tmp != nil
