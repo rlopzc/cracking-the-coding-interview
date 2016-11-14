@@ -115,18 +115,12 @@ class Node
     print "#{head.data} -> "
   end
 
-  def self.compare_two_llists(head_1, head_2)
-    return false if head_1 == nil || head_2 == nil
-    tmp_1, tmp_2 = head_1, head_2
-    while tmp_1 != nil && tmp_2 != nil
-      return false if tmp_1.data != tmp_2.data
-      tmp_1, tmp_2 = tmp_1.next, tmp_2.next
+  def self.compare_two_llists(head_a, head_b)
+    return false if head_a == nil || head_b == nil
+    while head_a != nil && head_b != nil && head_a.data == head_b.data
+      head_a, head_b = head_a.next, head_b.next
     end
-    if tmp_1 != nil || tmp_2 != nil
-      return false
-    else
-      true
-    end
+    head_a == head_b
   end
 
   def self.compare_two_llists_recursive(head_1, head_2)
@@ -167,6 +161,51 @@ class Node
 
   def self.merge_llists_recursive(head_a, head_b)
     # TODO to implement
+  end
+
+  def self.position_from_tail(head, position)
+    slow = fast = head
+    (position + 1).times do
+      fast = fast.next
+    end
+    while fast != nil
+      fast = fast.next
+      slow = slow.next
+    end
+    puts slow.data
+  end
+
+  def self.position_from_tail_stack(head, position)
+    s = [] # Stack
+    while head != nil
+      s.push(head.data)
+      head = head.next
+    end
+    s[-(position + 1)]
+  end
+
+  def self.position_from_tail_recursive(head, position)
+    if head == nil
+      return position
+    end
+    current_pos = position_from_tail_recursive(head.next, position)
+    if current_pos == 0
+      puts head.data
+      nil
+    elsif current_pos != nil && current_pos > 0
+      current_pos - 1
+    end
+  end
+
+  def self.delete_duplicate_values(head)
+    tmp = head
+    while tmp != nil
+      if tmp.next != nil && tmp.next.data == tmp.data
+        tmp.next = tmp.next.next
+      else
+        tmp = tmp.next
+      end
+    end
   end
 
   def inspect
